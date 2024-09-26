@@ -3,6 +3,7 @@ import { getProducts } from "../api";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export default function ProductsPage() {
   //const [count, setCount] = useState(0);
@@ -31,7 +32,7 @@ export default function ProductsPage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const token = localStorage.getItem("token");
-
+  useAuth();
   useEffect(() => {
     if (!token) {
       toast.error("Debes iniciar sesion para ver los productos");
@@ -59,8 +60,11 @@ export default function ProductsPage() {
             >
               <img src={product.thumbnail} alt={product.title} />
               <p className="text-lg text-center">{product.title}</p>
-              <Link to={`/productos/${product.id}`} className="bg-white/50 w-full p-2 rounded text-center">
-                  Ver detalle 
+              <Link
+                to={`/productos/${product.id}`}
+                className="bg-white/50 w-full p-2 rounded text-center"
+              >
+                Ver detalle
               </Link>
             </article>
           );
